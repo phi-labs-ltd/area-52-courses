@@ -1,0 +1,5 @@
+.DS_Store
+*.ini
+.env
+.env.*
+target/
