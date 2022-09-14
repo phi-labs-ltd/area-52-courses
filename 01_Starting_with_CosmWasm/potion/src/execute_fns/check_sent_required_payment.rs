@@ -1,7 +1,7 @@
 use crate::error::ContractError;
 use cosmwasm_std::Coin;
 
-pub fn assert_sent_sufficient_payment(
+pub fn check_sent_required_payment(
     sent: &[Coin],
     required: Option<Coin>,
 ) -> Result<(), ContractError> {
