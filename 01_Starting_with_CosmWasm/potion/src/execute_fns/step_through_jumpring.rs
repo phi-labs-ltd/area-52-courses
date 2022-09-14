@@ -1,6 +1,7 @@
 use crate::error::ContractError;
 use crate::execute_fns::check_sapience_level::check_sapience_level;
-use cosmwasm_std::{to_binary, Addr, DepsMut, MessageInfo, Response, WasmMsg};
+use crate::execute_fns::assert_sent_sufficient_payment::assert_sent_sufficient_payment;
+use cosmwasm_std::{to_binary, Addr, DepsMut, MessageInfo, Response, WasmMsg, Coin, Uint128};
 use portal::msg::ExecuteMsg;
 use universe::species::Traveler;
 
@@ -16,6 +17,12 @@ pub fn step_through_jumpring(
     if traveler.cyberdized != true {
         return Err(ContractError::NotACyborg {});
     }
+
+    let required_payment = Coin {
+        denom: "PORT".to_string(),
+        amount: Uint128::from(1u128),
+    };
+    assert_sent_sufficient_payment(&info.funds, Some(required_payment))?;
 
     let msg = WasmMsg::Execute {
         contract_addr: portal.to_string(),
