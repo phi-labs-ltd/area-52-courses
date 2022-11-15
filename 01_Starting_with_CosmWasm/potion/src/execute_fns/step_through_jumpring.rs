@@ -57,6 +57,17 @@ mod tests {
         let err_payment_too_low = check_sent_required_payment(&sent_payment_too_low, Some(required_payment.clone()));
         assert!(err_payment_too_low.is_err());
 
+        // Sending the correct amount of a different Coin should fail
+        let sent_payment_incorrect_coin = vec![
+            Coin {
+                denom: "NOT_PORT".to_string(),
+                amount: Uint128::from(10u128),
+            }
+        ];
+
+        let err_payment_incorrect_coin = check_sent_required_payment(&sent_payment_incorrect_coin, Some(required_payment.clone()));
+        assert!(err_payment_incorrect_coin.is_err());
+
         // Sending exactly the required payment should succeed
         let sent_exact_payment = vec![
             Coin {
