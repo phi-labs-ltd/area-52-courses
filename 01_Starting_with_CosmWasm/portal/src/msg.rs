@@ -16,10 +16,12 @@ pub enum ExecuteMsg {
     SetSapientNames { to: Vec<Sapient> },
     SetMinimumSapience { to: SapienceScale },
     JumpRingTravel { to: Addr },
+    SetPotionContract { potion: Addr },
 }
 
 #[derive(Serialize, Deserialize, JsonSchema)]
 pub struct InstantiateMsg {
+    pub potion: Addr,
     pub planet_name: String,
     pub planet_sapients: Vec<Sapient>,
     pub minimum_sapience: SapienceScale,

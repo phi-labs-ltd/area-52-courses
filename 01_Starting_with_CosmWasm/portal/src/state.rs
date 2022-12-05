@@ -18,6 +18,7 @@ pub fn config_read(storage: &dyn Storage) -> ReadonlySingleton<State> {
 #[derive(Serialize, Deserialize, JsonSchema)]
 pub struct State {
     pub owner: Addr,
+    pub potion: Addr,
     pub planet_name: String,
     pub planet_sapients: Vec<Sapient>,
     pub minimum_sapience: SapienceScale,
