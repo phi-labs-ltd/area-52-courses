@@ -16,6 +16,7 @@ pub enum ExecuteMsg {
     SetSapientNames { to: Vec<Sapient> },
     SetMinimumSapience { to: SapienceScale },
     JumpRingTravel { to: Addr },
+    SetPotionContract { potion: Addr },
 }
 
 #[derive(Serialize, Deserialize, JsonSchema)]
