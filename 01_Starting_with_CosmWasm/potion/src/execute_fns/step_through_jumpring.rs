@@ -32,3 +32,62 @@ pub fn step_through_jumpring(
 
     Ok(Response::new().add_message(msg))
 }
+
+#[cfg(test)]
+mod tests {
+
+    use cosmwasm_std::{Coin, Uint128};
+    use crate::execute_fns::check_sent_required_payment::check_sent_required_payment;
+
+    #[test]
+    fn testing_payment_checker() {
+        let required_payment = Coin {
+            denom: "PORT".to_string(),
+            amount: Uint128::from(10u128),
+        };
+
+        // Sending payment lower than required should fail
+        let sent_payment_too_low = vec![
+            Coin {
+                denom: "PORT".to_string(),
+                amount: Uint128::from(1u128),
+            }
+        ];
+
+        let err_payment_too_low = check_sent_required_payment(&sent_payment_too_low, Some(required_payment.clone()));
+        assert!(err_payment_too_low.is_err());
+
+        // Sending the correct amount of a different Coin should fail
+        let sent_payment_incorrect_coin = vec![
+            Coin {
+                denom: "NOT_PORT".to_string(),
+                amount: Uint128::from(10u128),
+            }
+        ];
+
+        let err_payment_incorrect_coin = check_sent_required_payment(&sent_payment_incorrect_coin, Some(required_payment.clone()));
+        assert!(err_payment_incorrect_coin.is_err());
+
+        // Sending exactly the required payment should succeed
+        let sent_exact_payment = vec![
+            Coin {
+                denom: "PORT".to_string(),
+                amount: Uint128::from(10u128),
+            }
+        ];
+
+        let success1 = check_sent_required_payment(&sent_exact_payment, Some(required_payment.clone()));
+        assert!(success1.is_ok());
+
+        // Sending more funds than required payment should succeed
+        let sent_higher_payment_than_required = vec![
+            Coin {
+                denom: "PORT".to_string(),
+                amount: Uint128::from(15u128),
+            }
+        ];
+
+        let success2 = check_sent_required_payment(&sent_higher_payment_than_required, Some(required_payment.clone()));
+        assert!(success2.is_ok());
+    }
+}
