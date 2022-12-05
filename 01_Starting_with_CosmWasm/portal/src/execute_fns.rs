@@ -5,9 +5,32 @@ use universe::species::{SapienceScale, Sapient};
 
 pub fn initiate_jumpring_travel(
     _to: Addr,
-    _deps: DepsMut,
-    _info: MessageInfo,
+    deps: DepsMut,
+    info: MessageInfo,
 ) -> Result<Response, ContractError> {
+    let state = config(deps.storage).load()?;
+
+    // Only potion contract can initiate_jumpring_travel 
+    if info.sender != state.potion {
+        return Err(ContractError::Unauthorized {});
+    }
+
+    Ok(Response::default())
+}
+
+pub fn set_potion_contract(
+    potion: Addr,
+    deps: DepsMut,
+    info: MessageInfo,
+) -> Result<Response, ContractError> {
+    let mut state = config(deps.storage).load()?;
+    if info.sender != state.owner {
+        return Err(ContractError::Unauthorized {});
+    }
+
+    state.potion = potion;
+    config(deps.storage).save(&state)?;
+
     Ok(Response::default())
 }
 

@@ -1,4 +1,4 @@
-use cosmwasm_std::entry_point;
+use cosmwasm_std::{entry_point};
 use cosmwasm_std::{Binary, Deps, DepsMut, Env, MessageInfo, Response, StdResult};
 
 use crate::error::ContractError;
@@ -41,6 +41,7 @@ pub fn instantiate(
 ) -> Result<Response, ContractError> {
     let state = State {
         owner: info.sender,
+        potion: msg.potion,
         planet_name: msg.planet_name,
         planet_sapients: msg.planet_sapients,
         minimum_sapience: msg.minimum_sapience,
