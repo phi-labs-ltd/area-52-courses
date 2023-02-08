@@ -1,0 +1,18 @@
+[package]
+name = "universe"
+version = "0.1.1"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+cosmwasm-std = "1.0.0-beta"
+schemars = "0.8"
+serde = { version = "1.0.103" }
+
+[dev-dependencies]
+cosmwasm-vm = "1.0.0-beta"
+cosmwasm-schema = "1.0.0-beta"

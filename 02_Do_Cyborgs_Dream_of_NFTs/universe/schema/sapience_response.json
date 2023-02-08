@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SapienceResponse",
+  "type": "object",
+  "required": [
+    "level"
+  ],
+  "properties": {
+    "level": {
+      "$ref": "#/definitions/SapienceScale"
+    }
+  },
+  "definitions": {
+    "SapienceScale": {
+      "type": "string",
+      "enum": [
+        "None",
+        "Low",
+        "Medium",
+        "High"
+      ]
+    }
+  }
+}
