@@ -24,7 +24,7 @@ pub fn step_through_jumpring(
 
     let required_payment = Coin {
         denom: DENOM.to_string(),
-        amount: Uint128::from(1u128),
+        amount: Uint128::from(1000000u128),
     };
     check_sent_required_payment(&info.funds, Some(required_payment))?;
 
@@ -48,14 +48,14 @@ mod tests {
     fn testing_payment_checker() {
         let required_payment = Coin {
             denom: DENOM.to_string(),
-            amount: Uint128::from(10u128),
+            amount: Uint128::from(1000000u128),
         };
 
         // Sending payment lower than required should fail
         let sent_payment_too_low = vec![
             Coin {
                 denom: DENOM.to_string(),
-                amount: Uint128::from(1u128),
+                amount: Uint128::from(1000u128),
             }
         ];
 
@@ -67,7 +67,7 @@ mod tests {
         let sent_payment_incorrect_coin = vec![
             Coin {
                 denom: "PORT".to_string(),
-                amount: Uint128::from(10u128),
+                amount: Uint128::from(1000000u128),
             }
         ];
 
@@ -78,7 +78,7 @@ mod tests {
         let sent_exact_payment = vec![
             Coin {
                 denom: DENOM.to_string(),
-                amount: Uint128::from(10u128),
+                amount: Uint128::from(1000000u128),
             }
         ];
 
@@ -89,7 +89,7 @@ mod tests {
         let sent_higher_payment_than_required = vec![
             Coin {
                 denom: DENOM.to_string(),
-                amount: Uint128::from(15u128),
+                amount: Uint128::from(1500000u128),
             }
         ];
 
