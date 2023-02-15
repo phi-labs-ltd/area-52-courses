@@ -119,7 +119,7 @@ mod tests {
             name: Some("Traveler Name".into()),
             description: Some("Ever since you became a cyborg, you've been feeling pretty weird...".into()),
             image: Some("ipfs://QmZdPdZzZum2jQ7jg1ekfeE3LSz1avAaa42G6mfimw9TEn".into()),
-            dna: Some("Example DNA String".into()), // XXX TODO (drew): Re-work the way DNA strings are built and parsed in Potion contract
+            dna: Some("Example DNA String".into()),
             species: Some(species.name),
             sapience_level: Some(species.sapience_level),
             issuer: Some(Addr::unchecked("archway1yvnw8xj5elngcq95e2n2p8f80zl7shfwyxk88858pl6cgzveeqtqy7xtf7")),
