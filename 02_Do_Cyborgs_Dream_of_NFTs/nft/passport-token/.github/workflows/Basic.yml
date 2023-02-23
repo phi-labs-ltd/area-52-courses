@@ -1,0 +1,83 @@
+# Based on https://github.com/actions-rs/example/blob/master/.github/workflows/quickstart.yml
+
+# on: [push, pull_request]
+
+# name: Basic
+
+# jobs:
+
+#   test:
+#     name: Test Suite
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout sources
+#         uses: actions/checkout@v2
+
+#       - name: Install stable toolchain
+#         uses: actions-rs/toolchain@v1
+#         with:
+#           toolchain: stable
+#           target: wasm32-unknown-unknown
+#           override: true
+#           profile: minimal
+
+#       - name: Run unit tests
+#         uses: actions-rs/cargo@v1
+#         with:
+#           command: unit-test
+#           args: --locked
+#         env:
+#           RUST_BACKTRACE: 1
+
+#       - name: Compile WASM contract
+#         uses: actions-rs/cargo@v1
+#         with:
+#           command: wasm
+#           args: --locked
+#         env:
+#           RUSTFLAGS: "-C link-arg=-s"
+
+#   lints:
+#     name: Lints
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout sources
+#         uses: actions/checkout@v2
+
+#       - name: Install stable toolchain
+#         uses: actions-rs/toolchain@v1
+#         with:
+#           toolchain: stable
+#           override: true
+#           profile: minimal
+#           components: rustfmt, clippy
+
+#       - name: Run cargo fmt
+#         uses: actions-rs/cargo@v1
+#         with:
+#           command: fmt
+#           args: --all -- --check
+
+#       - name: Run cargo clippy
+#         uses: actions-rs/cargo@v1
+#         with:
+#           command: clippy
+#           args: -- -D warnings
+
+#       - name: Generate schema
+#         uses: actions-rs/cargo@v1
+#         with:
+#           command: schema
+#           args: --locked
+
+#       - name: Verify schema
+#         uses: tj-actions/verify-changed-files@v8
+#         id: verify-schema
+#         with:
+#           files: schema/.*\.json
+
+#       - name: Display changed schemas
+#         if: steps.verify-schema.outputs.files_changed == 'true'
+#         run: |
+#           echo "The schema files are not in sync with the repository. Please, run 'cargo schema' to generate them again and commit the changes."
+#           exit 1

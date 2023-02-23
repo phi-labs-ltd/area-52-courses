@@ -1,0 +1,31 @@
+[package]
+name = "portal"
+version = "0.2.0"
+edition = "2018"
+description = "Area-52 JumpRing contract"
+authors = ["Drew Taylor <drew.taylor@philabs.xyz>", "Adam Kecskes <adam.kecskes@philabs.xyz>"]
+license = "Apache-2.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+doctest = false
+
+[features]
+backtraces = ["cosmwasm-std/backtraces"]
+
+[dependencies]
+cosmwasm-std = "~1.0.0-beta"
+cw-storage-plus = "~1.0.0-beta"
+universe = { path = "../universe" }
+cw721 = { path = "../nft/cw721-soulbound/packages/cw721", version = "0.13.4" }
+cw721-soulbound = { path = "../nft/cw721-soulbound", version = "0.13.4", features = ["library"] }
+passport-token = { path = "../nft/passport-token/", version = "0.1.0", features = ["library"] }
+schemars = "0.8"
+serde = { version = "1.0.103", default-features = false, features = ["derive"] }
+thiserror = "1.0.23"
+
+[dev-dependencies]
+cosmwasm-schema = "~1.0.0-beta"
+cw-multi-test = "0.13.4"

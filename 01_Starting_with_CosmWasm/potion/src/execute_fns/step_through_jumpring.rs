@@ -5,6 +5,10 @@ use cosmwasm_std::{to_binary, Addr, DepsMut, MessageInfo, Response, WasmMsg, Coi
 use portal::msg::ExecuteMsg;
 use universe::species::Traveler;
 
+// Exporting the payment token expected 
+// by our contract, is helpful
+pub static DENOM: &str = "uport"; 
+
 pub fn step_through_jumpring(
     portal: Addr,
     destination: Addr,
@@ -19,8 +23,8 @@ pub fn step_through_jumpring(
     }
 
     let required_payment = Coin {
-        denom: "PORT".to_string(),
-        amount: Uint128::from(1u128),
+        denom: DENOM.to_string(),
+        amount: Uint128::from(1000000u128),
     };
     check_sent_required_payment(&info.funds, Some(required_payment))?;
 
@@ -38,19 +42,20 @@ mod tests {
 
     use cosmwasm_std::{Coin, Uint128};
     use crate::execute_fns::check_sent_required_payment::check_sent_required_payment;
+    use crate::execute_fns::step_through_jumpring::DENOM;
 
     #[test]
     fn testing_payment_checker() {
         let required_payment = Coin {
-            denom: "PORT".to_string(),
-            amount: Uint128::from(10u128),
+            denom: DENOM.to_string(),
+            amount: Uint128::from(1000000u128),
         };
 
         // Sending payment lower than required should fail
         let sent_payment_too_low = vec![
             Coin {
-                denom: "PORT".to_string(),
-                amount: Uint128::from(1u128),
+                denom: DENOM.to_string(),
+                amount: Uint128::from(1000u128),
             }
         ];
 
@@ -58,10 +63,11 @@ mod tests {
         assert!(err_payment_too_low.is_err());
 
         // Sending the correct amount of a different Coin should fail
+        // Even though we send `PORT`, the native chain handles it as microport (`uport`)
         let sent_payment_incorrect_coin = vec![
             Coin {
-                denom: "NOT_PORT".to_string(),
-                amount: Uint128::from(10u128),
+                denom: "PORT".to_string(),
+                amount: Uint128::from(1000000u128),
             }
         ];
 
@@ -71,8 +77,8 @@ mod tests {
         // Sending exactly the required payment should succeed
         let sent_exact_payment = vec![
             Coin {
-                denom: "PORT".to_string(),
-                amount: Uint128::from(10u128),
+                denom: DENOM.to_string(),
+                amount: Uint128::from(1000000u128),
             }
         ];
 
@@ -82,8 +88,8 @@ mod tests {
         // Sending more funds than required payment should succeed
         let sent_higher_payment_than_required = vec![
             Coin {
-                denom: "PORT".to_string(),
-                amount: Uint128::from(15u128),
+                denom: DENOM.to_string(),
+                amount: Uint128::from(1500000u128),
             }
         ];
 

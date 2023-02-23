@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Sapient",
+  "type": "object",
+  "required": [
+    "name",
+    "species",
+    "telepathic"
+  ],
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "species": {
+      "$ref": "#/definitions/Species"
+    },
+    "telepathic": {
+      "type": "boolean"
+    }
+  },
+  "definitions": {
+    "SapienceScale": {
+      "type": "string",
+      "enum": [
+        "None",
+        "Low",
+        "Medium",
+        "High"
+      ]
+    },
+    "Species": {
+      "type": "object",
+      "required": [
+        "name",
+        "sapience_level"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "sapience_level": {
+          "$ref": "#/definitions/SapienceScale"
+        }
+      }
+    }
+  }
+}
